@@ -1,13 +1,25 @@
 #!/bin/bash
 
-# Check PIA VPN connection state using piactl
+# Monitor PIA VPN connection state using piactl
 
-state=$(piactl get connectionstate 2>/dev/null)
-
-if [ "$state" = "Connected" ]; then
-    protocol=$(piactl get protocol 2>/dev/null)
-    pubip=$(piactl get pubip 2>/dev/null)
-    echo "{\"text\": \"VPN Connected: ${pubip}\", \"tooltip\": \"${protocol}\", \"class\": \"connected\"}"
-else
-    echo "{\"text\": \"VPN Disconnected\", \"tooltip\": \"Execute 'piactl connect'\", \"class\": \"disconnected\"}"
-fi
+piactl monitor connectionstate | while read -r state; do
+    case "$state" in
+        "Connected")
+            protocol=$(piactl get protocol 2>/dev/null)
+            pubip=$(piactl get pubip 2>/dev/null)
+            echo "{\"text\": \"VPN Connected: ${pubip}\", \"tooltip\": \"${protocol}\", \"class\": \"connected\"}"
+            ;;
+        "Connecting")
+            echo "{\"text\": \"VPN Connecting...\", \"class\": \"connecting\"}"
+            ;;
+        "Disconnecting")
+            echo "{\"text\": \"VPN Disconnecting...\", \"class\": \"disconnecting\"}"
+            ;;
+        "Disconnected")
+            echo "{\"text\": \"VPN Disconnected\", \"tooltip\": \"Click to connect\", \"class\": \"disconnected\"}"
+            ;;
+        *)
+            echo "{\"text\": \"VPN: ${state}\", \"class\": \"disconnected\"}"
+            ;;
+    esac
+done

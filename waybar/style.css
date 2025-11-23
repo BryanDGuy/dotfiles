@@ -118,6 +118,10 @@ tooltip {
     color: #f9e2af;
 }
 
+#custom-pia.disconnecting {
+    color: #f9e2af;
+}
+
 #bluetooth {
     color: #89b4fa;
     border-radius: 0px 20px 20px 0px;
