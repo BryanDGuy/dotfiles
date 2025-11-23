@@ -53,7 +53,7 @@ tooltip {
 #window,
 #clock,
 #pulseaudio,
-#network,
+#custom-pia,
 #bluetooth,
 #temperature,
 #workspaces,
@@ -103,18 +103,27 @@ tooltip {
     padding-left: 7px;
 }
 
-#network {
-    color: #f9e2af;
+#custom-pia {
+    color: #a6e3a1;
     border-radius: 20px 0px 0px 20px;
     border-left: 0px;
     border-right: 0px;
 }
 
+#custom-pia.disconnected {
+    color: #eba0ac;
+}
+
+#custom-pia.connecting {
+    color: #f9e2af;
+}
+
 #bluetooth {
     color: #89b4fa;
-    border-radius: 20px;
-    margin-right: 10px
-} 
+    border-radius: 0px 20px 20px 0px;
+    margin-right: 10px;
+    border-left: 0px;
+}
 
 #pulseaudio {
     color: #89b4fa;
