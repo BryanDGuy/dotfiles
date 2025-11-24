@@ -6,8 +6,8 @@ piactl monitor connectionstate | while read -r state; do
     case "$state" in
         "Connected")
             protocol=$(piactl get protocol 2>/dev/null)
-            pubip=$(piactl get pubip 2>/dev/null)
-            echo "{\"text\": \"VPN Connected: ${pubip}\", \"tooltip\": \"${protocol}\", \"class\": \"connected\"}"
+            vpnip=$(piactl get vpnip 2>/dev/null)
+            echo "{\"text\": \"VPN Connected: ${vpnip}\", \"tooltip\": \"${protocol}\", \"class\": \"connected\"}"
             ;;
         "Connecting")
             echo "{\"text\": \"VPN Connecting...\", \"class\": \"connecting\"}"
