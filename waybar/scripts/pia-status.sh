@@ -7,10 +7,14 @@ piactl monitor connectionstate | while read -r state; do
         "Connected")
             protocol=$(piactl get protocol 2>/dev/null)
 
-            if [ -z "$vpnip" ] || [ "$vpnip" = "Unknown" ]; then
+            # Loop until we get a valid VPN IP
+            vpnip=""
+            while [ -z "$vpnip" ] || [ "$vpnip" = "Unknown" ]; do
                 vpnip=$(piactl get vpnip 2>/dev/null)
-                sleep 1
-            fi
+                if [ -z "$vpnip" ] || [ "$vpnip" = "Unknown" ]; then
+                    sleep 1
+                fi
+            done
 
             echo "{\"text\": \"VPN Connected: ${vpnip}\", \"tooltip\": \"${protocol}\", \"class\": \"connected\"}"
             ;;
